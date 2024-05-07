@@ -10,20 +10,20 @@ import model.body.RegisterRequestBody;
 import static io.restassured.RestAssured.given;
 
 public class UserApi {
-    private static final String registerUrl = Urls.STELLAR_BURGERS_URL + Urls.REGISTER_HANDLE;
+    private static final String REGISTER_URL = Urls.STELLAR_BURGERS_URL + Urls.REGISTER_HANDLE;
 
-    private static final String loginUrl = Urls.STELLAR_BURGERS_URL + Urls.LOGIN_HANDLE;
+    private static final String LOGIN_URL = Urls.STELLAR_BURGERS_URL + Urls.LOGIN_HANDLE;
 
-    private static final String deleteUrl = Urls.STELLAR_BURGERS_URL + Urls.USER_HANDLE;
+    private static final String DELETE_URL = Urls.STELLAR_BURGERS_URL + Urls.USER_HANDLE;
 
-    private static final String editUserUrl = Urls.STELLAR_BURGERS_URL + Urls.USER_HANDLE;
+    private static final String EDIT_USER_URL = Urls.STELLAR_BURGERS_URL + Urls.USER_HANDLE;
 
     @Step("Регистрация пользователя")
     public static Response register(RegisterRequestBody registerRequestBody) {
         return given()
                 .header("Content-type", "application/json")
                 .body(registerRequestBody)
-                .post(registerUrl);
+                .post(REGISTER_URL);
     }
 
     @Step("Логин пользователя")
@@ -31,7 +31,7 @@ public class UserApi {
         return given()
                 .header("Content-type", "application/json")
                 .body(loginRequestBody)
-                .post(loginUrl);
+                .post(LOGIN_URL);
     }
 
     @Step("Удаление пользователя")
@@ -40,7 +40,7 @@ public class UserApi {
                 .auth()
                 .oauth2(token)
                 .header("Content-type", "application/json")
-                .delete(deleteUrl);
+                .delete(DELETE_URL);
     }
 
     @Step("Попытка логина пользователя, при усехе - удаление пользователя")
@@ -62,7 +62,7 @@ public class UserApi {
                 .oauth2(token)
                 .header("Content-type", "application/json")
                 .body(editUserRequestBody)
-                .patch(editUserUrl);
+                .patch(EDIT_USER_URL);
     }
 
     @Step("Логин и получение токена")

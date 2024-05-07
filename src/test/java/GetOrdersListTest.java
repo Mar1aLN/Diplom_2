@@ -1,7 +1,8 @@
-import constants.IngredientHashes;
+import constants.IngredientTypes;
 import constants.StatusCodes;
 import io.qameta.allure.Step;
 import io.qameta.allure.junit4.DisplayName;
+import model.api.IngredientsApi;
 import model.api.OrdersApi;
 import model.api.UserApi;
 import model.body.LoginRequestBody;
@@ -11,13 +12,14 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import service.RandomString;
 
 import java.util.Arrays;
 
 import static org.hamcrest.Matchers.equalTo;
 
 public class GetOrdersListTest {
-    private final String email = "Nikitina@email.org";
+    private final String email = RandomString.getAlphaNumericString(5) + "@email.org";
 
     private final String password = "12345";
 
@@ -44,9 +46,9 @@ public class GetOrdersListTest {
                 .assertThat().body("success", equalTo(true))
                 .assertThat().body("orders.size()", equalTo(0));
 
-        OrdersApi.create(new OrderCreateRequest(Arrays.asList(IngredientHashes.CRATER_BUN, IngredientHashes.BEEF_METEOR_CUTLET)), loginToken);
+        OrdersApi.create(new OrderCreateRequest(Arrays.asList(IngredientsApi.getFirstAvailableIngredient(IngredientTypes.BUN).get_id(), IngredientsApi.getFirstAvailableIngredient(IngredientTypes.MAIN).get_id())), loginToken);
 
-        OrdersApi.create(new OrderCreateRequest(Arrays.asList(IngredientHashes.CRATER_BUN, IngredientHashes.BEEF_METEOR_CUTLET)), loginToken);
+        OrdersApi.create(new OrderCreateRequest(Arrays.asList(IngredientsApi.getFirstAvailableIngredient(IngredientTypes.BUN).get_id(), IngredientsApi.getFirstAvailableIngredient(IngredientTypes.MAIN).get_id())), loginToken);
 
         OrdersApi.getList(loginToken)
                 .then()

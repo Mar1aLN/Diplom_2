@@ -7,11 +7,12 @@ import model.body.RegisterRequestBody;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import service.RandomString;
 
 import static org.hamcrest.Matchers.equalTo;
 
 public class RegisterTest {
-    private final String email = "Nikitina@email.org";
+    private final String email = RandomString.getAlphaNumericString(5) + "@email.org";
 
     private final String password = "12345";
 

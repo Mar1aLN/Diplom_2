@@ -8,9 +8,9 @@ import model.body.OrderCreateRequest;
 import static io.restassured.RestAssured.given;
 
 public class OrdersApi {
-    private static final String orderCreateUrl = Urls.STELLAR_BURGERS_URL + Urls.ORDERS_HANDLE;
+    private static final String ORDER_CREATE_URL = Urls.STELLAR_BURGERS_URL + Urls.ORDERS_HANDLE;
 
-    private static final String getOrdersUrl = Urls.STELLAR_BURGERS_URL + Urls.ORDERS_HANDLE;
+    private static final String GET_ORDERS_URL = Urls.STELLAR_BURGERS_URL + Urls.ORDERS_HANDLE;
 
     @Step("Создание заказа")
     public static Response create(OrderCreateRequest orderCreateRequest, String token) {
@@ -19,7 +19,7 @@ public class OrdersApi {
                 .oauth2(token)
                 .header("Content-type", "application/json")
                 .body(orderCreateRequest)
-                .post(orderCreateUrl);
+                .post(ORDER_CREATE_URL);
     }
 
     @Step("Получение списка заказов")
@@ -28,6 +28,6 @@ public class OrdersApi {
                 .auth()
                 .oauth2(token)
                 .header("Content-type", "application/json")
-                .get(getOrdersUrl);
+                .get(GET_ORDERS_URL);
     }
 }

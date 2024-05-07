@@ -7,13 +7,16 @@ public class Ingredient {
 
     private float price;
 
+    private String type;
+
     public Ingredient() {
     }
 
-    public Ingredient(String _id, String name, float price) {
+    public Ingredient(String _id, String name, float price, String type) {
         this._id = _id;
         this.name = name;
         this.price = price;
+        this.type = type;
     }
 
     public String get_id() {
@@ -38,5 +41,13 @@ public class Ingredient {
 
     public void setPrice(float price) {
         this.price = price;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

@@ -1,7 +1,8 @@
-import constants.IngredientHashes;
+import constants.IngredientTypes;
 import constants.StatusCodes;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
+import model.api.IngredientsApi;
 import model.api.OrdersApi;
 import model.api.UserApi;
 import model.body.LoginRequestBody;
@@ -14,6 +15,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import service.RandomString;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,7 +26,7 @@ import static org.hamcrest.Matchers.*;
 
 @RunWith(Parameterized.class)
 public class OrderCreateTest {
-    private final String email = "Nikitina@email.org";
+    private final String email = RandomString.getAlphaNumericString(5) + "@email.org";
 
     private final String password = "12345";
 
@@ -57,14 +59,14 @@ public class OrderCreateTest {
     public static Object[][] parameters() {
         return new Object[][]{
                 {true
-                        , Arrays.asList(IngredientHashes.BEEF_METEOR_CUTLET, IngredientHashes.CRATER_BUN)
+                        , Arrays.asList(IngredientsApi.getFirstAvailableIngredient(IngredientTypes.BUN).get_id(), IngredientsApi.getFirstAvailableIngredient(IngredientTypes.MAIN).get_id())
                         , StatusCodes.ORDER_CREATE_OK
                         , equalTo(true)
                         , notNullValue()
                         , "Позитивная проверка создания заказа: указаны ингредиенты, указан токен"
                 },
                 {false
-                        , Arrays.asList(IngredientHashes.BEEF_METEOR_CUTLET, IngredientHashes.CRATER_BUN)
+                        , Arrays.asList(IngredientsApi.getFirstAvailableIngredient(IngredientTypes.BUN).get_id(), IngredientsApi.getFirstAvailableIngredient(IngredientTypes.MAIN).get_id())
                         , StatusCodes.ORDER_CREATE_NO_AUTH
                         , equalTo(false)
                         , emptyOrNullString()
